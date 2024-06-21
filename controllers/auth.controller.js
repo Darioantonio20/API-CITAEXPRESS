@@ -40,8 +40,6 @@ const login = async (req, res = response) => {
         //! Generar el jwt
         const token = await generarJWT(usuario.id);
 
-
-
         res.json({
             usuario,
             token

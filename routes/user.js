@@ -18,9 +18,10 @@ router.put('/:id', [
 
 router.post('/', [
     check('nombre', 'el nombre es obligatorio').not().isEmpty(),
-    check('password', 'el password debe de ser mas de 6 letras').isLength({ min: 6 }),
+    check('numeroTel', 'el número de teléfono debe ser numérico').isNumeric(),
     check('correo', 'el correo no es valido').isEmail(),
     check('correo').custom(emailExiste),
+    check('password', 'el password debe de ser mas de 6 letras').isLength({ min: 6 }),
     validarCampos
 ], usuariosPost);
 

@@ -11,17 +11,10 @@ class Server {
 
         this.usuariosPath = '/api/user';
         this.authPath = '/api/auth';
-     
-
-
-        //conectar a la base de datos 
-        this.conectarDB();
-        //middlewares
-        this.middlewares();
-
-
-        //rutas
-        this.routes();
+    
+        this.conectarDB();     //conectar a la base de datos 
+        this.middlewares();   //middlewares
+        this.routes();        //rutas
     }
 
     async conectarDB() {
@@ -29,28 +22,20 @@ class Server {
     }
 
     middlewares() {
-
-        //CORS
-        this.app.use(cors());
-        //lectura y parseo del body
-        this.app.use(express.json())
-        //directorio public
-        this.app.use(express.static('public'))
+        this.app.use(cors());        //CORS
+        this.app.use(express.json())       //lectura y parseo del body
+        this.app.use(express.static('public'))      //directorio public
     }
 
     routes() {
-
         this.app.use(this.authPath, require('../routes/auth'))
         this.app.use(this.usuariosPath, require('../routes/user'))
- 
     }
 
     listen() {
-
         this.app.listen(this.port, () => {
             console.log('servidor corriendo en el puerto ', this.port);
         })
-
     }
 }
 

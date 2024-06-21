@@ -16,7 +16,11 @@ const UserSchema = Schema({
     password: {
         type: String,
         required: [true, 'La contraseña es obligatoria'],
+    },
 
+    numeroTel: {
+        type: Number,
+        required: [true, 'El número de teléfono es obligatorio'],
     },
 
     img: {

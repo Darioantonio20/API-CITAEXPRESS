@@ -45,8 +45,8 @@ const usuariosPatch = (req, res = response) => {
 
 const usuariosPost = async (req, res) => {
 
-    const { nombre, correo, password } = req.body;
-    const usuario = new Usuario({ nombre, correo, password });
+    const { nombre, correo, password, numeroTel} = req.body;
+    const usuario = new Usuario({ nombre, correo, password, numeroTel });
 
     //Encriptar la contraseña
     const salt = bcryptjs.genSaltSync();

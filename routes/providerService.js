@@ -22,8 +22,15 @@ router.post('/', [
 ], providersPost);
 
 router.put('/:id', [
+    validarJWT,
     check('id', 'No es un id válido').isMongoId(),
-    check('id').custom(existeUsuarioPorId),
+    check('emailProvider').optional().isEmail(),
+    check('emailProvider').optional().custom(emailExiste),
+    check('nameProvider', 'El nombre es obligatorio').optional().not().isEmpty(),
+    check('numberTelProvider', 'El número de teléfono debe ser numérico').optional().isNumeric(),
+    check('serviceProvider', 'El servicio es obligatorio').optional().not().isEmpty(),
+    check('ubication', 'La ubicación es obligatoria').optional().not().isEmpty(),
+    check('passwordProvider', 'El password debe tener más de 6 letras').optional().isLength({ min: 6 }),
     validarCampos
 ], providersPut);
 

@@ -36,7 +36,7 @@ const providersPost = async (req, res = response) => {
     });
 }
 
-const providersPut = async (req, res = response) => {
+const providersPut = async(req, res = response) => {
     const { id } = req.params;
     const { _id, passwordProvider, google, emailProvider, ...resto } = req.body;
 
@@ -45,8 +45,8 @@ const providersPut = async (req, res = response) => {
         resto.passwordProvider = bcryptjs.hashSync(passwordProvider, salt);
     }
 
-    const provider = await ProviderService.findByIdAndUpdate(id, resto);
-    res.json(provider);
+    const providerService = await ProviderService.findByIdAndUpdate(id, resto, { new: true });
+    res.json(providerService);
 }
 
 const providersDelete = async (req, res = response) => {

@@ -20,6 +20,24 @@ const usuariosGet = async(req = request, res = response) => {
     });
 }
 
+const usuariosGetById = async(req, res = response) => {
+    const { id } = req.params;
+    try {
+        const usuario = await Usuario.findById(id);
+        if (!usuario) {
+            return res.status(404).json({
+                msg: 'Usuario no encontrado'
+            });
+        }
+        res.json(usuario);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Hable con el administrador'
+        });
+    }
+}
+
 const usuariosPut = async(req, res = response) => {
 
     const { id } = req.params;
@@ -32,11 +50,13 @@ const usuariosPut = async(req, res = response) => {
     const usuario = await Usuario.findByIdAndUpdate( id, resto );
     res.json(usuario);
 }
+
 const usuariosPatch = (req, res = response) => {
     res.json({
         msg: 'patch API - usuariosPatch'
     });
 }
+
 const usuariosPost = async (req, res) => {
 
     const { nombre, correo, password, numeroTel} = req.body;
@@ -58,5 +78,5 @@ const usuariosDelete = async (req, res) => {
 }
 
 module.exports = {
-    usuariosGet, usuariosPut, usuariosPost, usuariosDelete
+    usuariosGet, usuariosPut, usuariosPost, usuariosDelete, usuariosGetById
 }

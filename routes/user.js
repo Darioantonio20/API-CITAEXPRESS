@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete } = require('../controllers/user.controller');
+const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete , usuariosGetById } = require('../controllers/user.controller');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { emailExiste, existeUsuarioPorId } = require('../helpers/db-validator');
 
@@ -23,6 +23,12 @@ router.post('/', [
     check('password', 'el password debe de ser mas de 6 letras').isLength({ min: 6 }),
     validarCampos
 ], usuariosPost);
+
+router.get('/:id', [
+    check('id', 'No es un ID válido de MongoDB').isMongoId(),
+    check('id').custom(existeUsuarioPorId),
+    validarCampos
+], usuariosGetById);
 
 router.delete('/:id', [
     check('id', 'No es un ID válido').isMongoId(),

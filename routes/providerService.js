@@ -1,9 +1,9 @@
 // routes/providerService.js
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { providersGet, providersPost, providersPut, providersDelete } = require('../controllers/providerService.controller');
+const { providersGet, providersPost, providersPut, providersDelete, providersGetById } = require('../controllers/providerService.controller');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { emailExiste, existeUsuarioPorId } = require('../helpers/db-validator');
+const { emailExiste} = require('../helpers/db-validator');
 
 const router = Router();
 
@@ -32,9 +32,14 @@ router.put('/:id', [
     validarCampos
 ], providersPut);
 
+router.get('/:id', [
+    check('id', 'No es un ID válido').isMongoId(),
+  //check('id').custom(existeUsuarioPorId),
+    validarCampos
+], providersGetById);
+
 router.delete('/:id', [
     check('id', 'No es un ID válido').isMongoId(),
-    check('id').custom(existeUsuarioPorId),
     validarCampos
 ], providersDelete);
 
